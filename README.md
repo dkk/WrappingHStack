@@ -22,7 +22,7 @@ Requirements iOS 13+
 Import the WrappingHStack package to your view.
 
 ```swift
-import StarRating
+import WrappingHStack
 ```
 
 Use it like you would use HStack for single elements:
