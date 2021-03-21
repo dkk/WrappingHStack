@@ -39,7 +39,7 @@ public struct WrappingHStack: View {
 // Convenience inits that allows 10 Elements (just like HStack).
 // Based on https://alejandromp.com/blog/implementing-a-equally-spaced-stack-in-swiftui-thanks-to-tupleview/
 public extension WrappingHStack {    
-    init<Data: RandomAccessCollection, Content: View>(alignment: Alignment = .top, spacing: CGFloat = 8, data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, content: @escaping (Data.Element) -> Content) {
+    init<Data: RandomAccessCollection, Content: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, content: @escaping (Data.Element) -> Content) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = data.map {
@@ -47,20 +47,20 @@ public extension WrappingHStack {
         }
     }
     
-    init<A: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> A) {
+    init<A: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> A) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content())]
     }
     
-    init<A: View, B: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B)>) {
+    init<A: View, B: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
                       AnyView(content().value.1)]
     }
     
-    init<A: View, B: View, C: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C)>) {
+    init<A: View, B: View, C: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -68,7 +68,7 @@ public extension WrappingHStack {
                       AnyView(content().value.2)]
     }
     
-    init<A: View, B: View, C: View, D: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
+    init<A: View, B: View, C: View, D: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -77,7 +77,7 @@ public extension WrappingHStack {
                       AnyView(content().value.3)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E)>) {
+    init<A: View, B: View, C: View, D: View, E: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -87,7 +87,7 @@ public extension WrappingHStack {
                       AnyView(content().value.4)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -98,7 +98,7 @@ public extension WrappingHStack {
                       AnyView(content().value.5)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -110,7 +110,7 @@ public extension WrappingHStack {
                       AnyView(content().value.6)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G, H)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G, H)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -123,7 +123,7 @@ public extension WrappingHStack {
                       AnyView(content().value.7)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
@@ -137,7 +137,7 @@ public extension WrappingHStack {
                       AnyView(content().value.8)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: Alignment = .center, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [AnyView(content().value.0),
