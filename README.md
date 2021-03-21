@@ -1,5 +1,9 @@
 # WrappingHStack
 
+WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positioning overflowing elements on next lines.
+
+## Example
+
 ![Example](./example.png?raw=true)
 ```swift
 WrappingHStack {
@@ -27,8 +31,6 @@ WrappingHStack {
 .padding()
 .border(Color.black)
 ```
-
-WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positioning overflowing elements on next lines.
 
 ## Installation
 Requirements iOS 13+
@@ -72,4 +74,3 @@ WrappingHStack(data: 1...30, id:\.self) {
 ## License
 
 WrappingHStack is released under the [MIT License](LICENSE).
-
