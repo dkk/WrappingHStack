@@ -36,7 +36,6 @@ WrappingHStack {
 or with a ForEach loop:
 
 ```swift
-```swift
 WrappingHStack(data: 1...30, id:\.self) {
     /* contained views */
 }
