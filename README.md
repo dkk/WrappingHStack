@@ -26,18 +26,16 @@ import StarRating
 ```
 
 Use it like you would use HStack for single elements:
-
 ```swift
 WrappingHStack {
     /* contained views */
 }
 ```
 
-or with a ForEach loop:
-
+or like a ForEach to loop over items:
 ```swift
 WrappingHStack(data: 1...30, id:\.self) {
-    /* contained views */
+    Text("Item: \($0)")
 }
 ```
 
