@@ -43,7 +43,7 @@ struct InternalWrappingHStack<Content: View>: View {
     }
     
     var body: some View {
-        VStack(alignment: alignment.horizontal) {
+        VStack(alignment: alignment.horizontal, spacing: 0) {
             ForEach(0 ..< totalLanes, id: \.self) { laneIndex in
                 HStack(alignment: alignment.vertical, spacing: spacing) {
                     ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
