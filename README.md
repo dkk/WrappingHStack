@@ -1,6 +1,32 @@
 # WrappingHStack
 
 ![Example](./example.png?raw=true)
+```swift
+WrappingHStack {
+    Text("WrappingHStack")
+        .padding()
+        .font(.title)
+        .border(Color.black)
+    
+    Text("can handle different element types")
+    
+    Image(systemName: "scribble")
+        .font(.title)
+        .frame(width: 200, height: 20)
+        .background(Color.purple)
+    
+    Text("and loop")
+        .bold()
+    
+    WrappingHStack(data: 1...20, id:\.self) {
+        Text("Item: \($0)")
+            .padding(3)
+            .background(Rectangle().stroke())
+    }.frame(minWidth: 250)
+}
+.padding()
+.border(Color.black)
+```
 
 WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positioning overflowing elements on next lines.
 
