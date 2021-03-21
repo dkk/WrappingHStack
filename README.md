@@ -1,5 +1,7 @@
 # WrappingHStack
 
+![Example](./example.png?raw=true)
+
 WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positioning overflowing elements on next lines.
 
 ## Installation
