@@ -38,7 +38,15 @@ public struct WrappingHStack: View {
 
 // Convenience inits that allows 10 Elements (just like HStack).
 // Based on https://alejandromp.com/blog/implementing-a-equally-spaced-stack-in-swiftui-thanks-to-tupleview/
-public extension WrappingHStack {
+public extension WrappingHStack {    
+    init<Data: RandomAccessCollection, Content: View>(alignment: Alignment = .top, spacing: CGFloat = 8, data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, content: @escaping (Data.Element) -> Content) {
+        self.spacing = spacing
+        self.alignment = alignment
+        self.items = data.map {
+            AnyView(content($0[keyPath: id]))
+        }
+    }
+    
     init<A: View>(alignment: Alignment = .top, spacing: CGFloat = 8, @ViewBuilder content: () -> A) {
         self.spacing = spacing
         self.alignment = alignment
