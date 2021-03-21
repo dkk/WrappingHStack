@@ -1,10 +1,3 @@
-//
-//  WrappingHStackExampleApp.swift
-//  WrappingHStackExample
-//
-//  Created by Daniel Kloeck on 18.03.21.
-//
-
 import SwiftUI
 
 @main
