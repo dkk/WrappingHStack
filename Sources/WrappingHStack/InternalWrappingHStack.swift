@@ -17,6 +17,7 @@ struct InternalWrappingHStack<Content: View>: View {
             let hostingController = NSHostingController(rootView: contentIterator.element)
             #endif
             
+            // Bug: returns the width of only the first element if it is a Group or ForEach
             let itemWidth = hostingController.view.intrinsicContentSize.width
             
             if result.currentLineWidth + itemWidth + spacing > width {
