@@ -1,35 +1,7 @@
 import SwiftUI
 import WrappingHStack
 
-struct ForEachExample: View {
-    var body: some View {
-        VStack(spacing: 0) {
-            Text("Above")
-                .background(Rectangle().stroke())
-            
-            HStack(spacing: 0) {
-                Text("Left")
-                    .background(Rectangle().stroke())
-                
-                WrappingHStack(alignment: .topLeading, spacing: 10, data: 1...30, id:\.self, content: {
-                    Text("\($0)")
-                        .foregroundColor(.red)
-                        .padding(.horizontal, 15)
-                        .background(Rectangle().stroke(Color.red))
-                }).background(Rectangle().stroke(Color.black))
-                
-                Text("Right")
-                    .background(Rectangle().stroke())
-            }
-            
-            Text("Bellow")
-                .background(Rectangle().stroke())
-        }
-        
-    }
-}
-
-struct SingleElementsExample: View {
+struct ExampleView: View {
     var body: some View {
         VStack(spacing: 0) {
             Text("Above")
@@ -38,44 +10,46 @@ struct SingleElementsExample: View {
                 Text("Left")
                     .background(Rectangle().stroke())
                 
-                WrappingHStack(spacing: 0) {
-                    Text("One")
-                        .frame(width: 100, height: 30)
-                        .background(Color.yellow)
-                    
-                    Image(systemName: "scribble")
+                WrappingHStack {
+                    Text("WrappingHStack")
+                        .padding()
                         .font(.title)
-                        .background(Color.purple)
+                        .border(Color.black)
+                        .padding(.vertical, 10)
                                         
-                    Text("Two")
-                        .frame(width: 200, height: 30)
-                        .background(Color.green)
-                    
-                    VStack {
-                        Text("Three")
-                            .padding(.horizontal, 80)
-                            .background(Color.gray)
-                        Text("Four")
+                    Group {
+                        Text("can")
+                        Text("handle different element")
                     }
-                    .layoutPriority(1)
-                    .background(Rectangle().stroke())
-                    
-                    VStack {
-                        Text("Five")
-                        Text("Six")
-                    }
-                    .background(Rectangle().stroke())
                     
                     HStack {
-                        Text("Seven")
+                        RoundedRectangle(cornerRadius: 5)
+                            .overlay(Text("types").foregroundColor(.white))
                         
-                        Image(systemName: "xmark.square")
+                        
+                        Image(systemName: "exclamationmark.circle.fill")
                             .font(.title)
-                            .foregroundColor(Color.red)
+                            .foregroundColor(.purple)
                     }
-                    .background(Rectangle().stroke())
+                    
+                    NewLine()
+                    
+                    Text("and loop items:")
+                        .bold()
+                        .padding(.bottom, 10)
+                    
+                    NewLine()
+                    
+                    WrappingHStack(data: 1...20, id:\.self) {
+                        Text("Item: \($0)")
+                            .padding(3)
+                            .background(Rectangle().stroke())
+                            .padding(3)
+                    }
                 }
-                .background(Rectangle().stroke(Color.black))
+                .padding(10)
+                .border(Color.black)
+                .padding(2)
                 
                 Text("Right")
                     .background(Rectangle().stroke())
@@ -84,17 +58,13 @@ struct SingleElementsExample: View {
             Text("Bellow")
                 .background(Rectangle().stroke())
         }
+        .padding(2)
         
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ForEachExample()
-            .previewLayout(.fixed(width: 300, height: 300))
-        
-        SingleElementsExample()
-            .previewLayout(.fixed(width: 300, height: 300))
-        
+        ExampleView()
     }
 }

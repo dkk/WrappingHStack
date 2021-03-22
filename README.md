@@ -47,16 +47,17 @@ Requirements iOS 13+
 ```
 ## Usage
 
-Import the WrappingHStack package to your view.
-
+Import the WrappingHStack package to your view:
 ```swift
 import WrappingHStack
 ```
 
-Use it like you would use HStack for single elements:
+use it like you would use HStack for single elements:
 ```swift
 WrappingHStack {
-    /* contained views */
+    /* some views */
+    NewLine() // Use the NewLine elemnt to force the next element to be placed in a next line
+    /* some more views */
 }
 ```
 
@@ -67,9 +68,11 @@ WrappingHStack(data: 1...30, id:\.self) {
 }
 ```
 
-## Known bugs:
-- ForEach will not work correctly when using the single element syntax.
+## Known bugs
+- Sometimes, line breaks caused by NewLine() are not shown in the preview canvas (they do work in the live preview).
+
+## Support
+If you like this project, you can [buy me a 🍪](https://www.buymeacoffee.com/kloeck) 
 
 ## License
-
 WrappingHStack is released under the [MIT License](LICENSE).
