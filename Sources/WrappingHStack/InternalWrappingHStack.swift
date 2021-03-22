@@ -12,9 +12,9 @@ struct InternalWrappingHStack<Content: View>: View {
             var (firstItems, currentLineWidth) = result
             
             #if os(iOS)
-            let hostingController = UIHostingController(rootView: contentIterator.element)
+            let hostingController = UIHostingController(rootView: HStack(spacing: spacing) { contentIterator.element })
             #else
-            let hostingController = NSHostingController(rootView: contentIterator.element)
+            let hostingController = NSHostingController(rootView: HStack(spacing: spacing) { contentIterator.element })
             #endif
             
             // Bug: returns the width of only the first element if it is a Group or ForEach

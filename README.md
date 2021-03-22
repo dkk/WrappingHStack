@@ -68,7 +68,6 @@ WrappingHStack(data: 1...30, id:\.self) {
 ```
 
 ## Known bugs:
-- When using `Group`s, it will only take into account the first element.
 - ForEach will not work correctly when using the single element syntax.
 
 ## License
