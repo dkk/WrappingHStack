@@ -56,7 +56,7 @@ use it like you would use HStack for single elements:
 ```swift
 WrappingHStack {
     /* some views */
-    NewLine() // Use the NewLine elemnt to force the next element to be placed in a next line
+    NewLine() // Use the NewLine element to force the next element to be placed in a next line
     /* some more views */
 }
 ```
@@ -72,7 +72,7 @@ WrappingHStack(data: 1...30, id:\.self) {
 - Sometimes, line breaks caused by NewLine() are not shown in the preview canvas (they do work in the live preview).
 
 ## Support
-If you like this project, you can [buy me a 🍪](https://www.buymeacoffee.com/kloeck) 
+If you want to support this project, you can [buy me a 🍪](https://www.buymeacoffee.com/kloeck) 
 
 ## License
 WrappingHStack is released under the [MIT License](LICENSE).
