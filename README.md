@@ -43,7 +43,7 @@ Requirements iOS 13+
 
 ### Swift Package
 ```swift
-.package(url: "https://github.com/dkk/WrappingHStack", .upToNextMajor(from: "1.0.0"))
+.package(url: "https://github.com/dkk/WrappingHStack", .upToNextMajor(from: "1.1.0"))
 ```
 ## Usage
 
@@ -56,7 +56,7 @@ use it like you would use HStack for single elements:
 ```swift
 WrappingHStack {
     /* some views */
-    NewLine() // Use the NewLine element to force the next element to be placed in a next line
+    NewLine() // Optional: Use NewLine to force the next element to be placed in a next line
     /* some more views */
 }
 ```
