@@ -70,6 +70,7 @@ WrappingHStack(data: 1...30, id:\.self) {
 
 ## Known bugs
 - Sometimes, line breaks caused by NewLine() are not shown in the preview canvas (they do work in the live preview).
+- Performance issue due to the use of the size calculation done with the hosting controller
 
 ## Support
 If you want to support this project, you can [buy me a 🍪](https://www.buymeacoffee.com/kloeck) 
