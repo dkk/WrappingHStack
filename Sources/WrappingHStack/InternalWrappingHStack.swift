@@ -8,7 +8,6 @@ struct InternalWrappingHStack: View {
     var content: [WrappingHStack.ViewType]
     
     var firstItems: [Int] {
-        print("-")
         return content.enumerated().reduce((firstItems: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItems: [Int], currentLineWidth: CGFloat) in
             var (firstItems, currentLineWidth) = result
             
@@ -22,7 +21,6 @@ struct InternalWrappingHStack: View {
                 let hostingController = NSHostingController(rootView: HStack(spacing: spacing) { anyView })
                 #endif
                 
-                // Bug: returns the width of only the first element if it is a Group or ForEach
                 let itemWidth = hostingController.view.intrinsicContentSize.width
                 
                 if result.currentLineWidth + itemWidth + spacing > width {
