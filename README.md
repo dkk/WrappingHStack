@@ -69,7 +69,7 @@ WrappingHStack(data: 1...30, id:\.self) {
 ```
 
 ## Support
-To support this project, you could help solving any [reported issues](https://github.com/dkk/WrappingHStack/issues) or you could [buy me a 🍪  to increase motivation](https://www.buymeacoffee.com/kloeck).
+To support this project, you could help solving any [reported issues](https://github.com/dkk/WrappingHStack/issues) or you could [increase my motivation by treating me to a 🍪](https://www.buymeacoffee.com/kloeck).
 
 ## License
 WrappingHStack is released under the [MIT License](LICENSE).
