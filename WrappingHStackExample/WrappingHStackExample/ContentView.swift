@@ -40,7 +40,7 @@ struct ExampleView: View {
                     
                     NewLine()
                     
-                    WrappingHStack(data: 1...20, id:\.self) {
+                    WrappingHStack(1...20, id:\.self) {
                         Text("Item: \($0)")
                             .padding(3)
                             .background(Rectangle().stroke())

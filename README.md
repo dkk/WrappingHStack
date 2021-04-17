@@ -1,6 +1,6 @@
 # WrappingHStack
 
-WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positioning overflowing elements on next lines.
+WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positions overflowing elements on next lines.
 
 ## Example
 
@@ -22,7 +22,7 @@ WrappingHStack {
     Text("and loop")
         .bold()
     
-    WrappingHStack(data: 1...20, id:\.self) {
+    WrappingHStack(1...20, id:\.self) {
         Text("Item: \($0)")
             .padding(3)
             .background(Rectangle().stroke())
@@ -43,7 +43,7 @@ Requirements iOS 13+
 
 ### Swift Package
 ```swift
-.package(url: "https://github.com/dkk/WrappingHStack", .upToNextMajor(from: "1.1.0"))
+.package(url: "https://github.com/dkk/WrappingHStack", .upToNextMajor(from: "2.0.0"))
 ```
 ## Usage
 
@@ -63,7 +63,7 @@ WrappingHStack {
 
 or like a ForEach to loop over items:
 ```swift
-WrappingHStack(data: 1...30, id:\.self) {
+WrappingHStack(1...30, id:\.self) {
     Text("Item: \($0)")
 }
 ```

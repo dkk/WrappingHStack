@@ -1,5 +1,9 @@
 import SwiftUI
 
+/// WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positions overflowing elements on next lines.
+/// It can be customized by using alignment (controls the alignment of the items, it will get ignored when combined with a `.dynamic` spacing
+/// for all but last lines with single elements), spacing (use `.constant` for fixed spacing and `.dynamic` to have the items fill the width
+/// of the WrappingHSTack)
 public struct WrappingHStack: View {
     private struct CGFloatPreferenceKey: PreferenceKey {
         static var defaultValue = CGFloat.zero
@@ -20,9 +24,23 @@ public struct WrappingHStack: View {
         }
     }
     
+    public enum Spacing {
+        case constant(CGFloat)
+        case dynamic(minSpacing: CGFloat)
+        
+        internal var estimatedSpacing: CGFloat {
+            switch self {
+            case .constant(let constantSpacing):
+                return constantSpacing
+            case .dynamic(minSpacing: let minSpacing):
+                return minSpacing
+            }
+        }
+    }
+    
     var items: [ViewType]
-    var alignment: Alignment
-    var spacing: CGFloat
+    var alignment: HorizontalAlignment
+    var spacing: Spacing
     @State private var height: CGFloat = 0
     
     public var body: some View {
@@ -58,26 +76,33 @@ public extension WrappingHStack {
         }
     }
     
-    init<Data: RandomAccessCollection, Content: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, content: @escaping (Data.Element) -> Content) {
+    /// Instatiates a WrappingHStack
+    /// - Parameters:
+    ///   - data: The items to show
+    ///   - id: The `KeyPath` to use as id for the items   
+    ///   - alignment: Controls the alignment of the items. This will get ignored when combined with a `.dynamic` spacing for all
+    ///     but last lines with single elements
+    ///   - spacing: Use `.constant` for fixed spacing and `.dynamic` to have the items fill the width of the WrappingHSTack
+    init<Data: RandomAccessCollection, Content: View>(_ data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), content: @escaping (Data.Element) -> Content) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = data.map { Self.viewType(from: content($0[keyPath: id])) }
     }
     
-    init<A: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> A) {
+    init<A: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> A) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content())]
     }
     
-    init<A: View, B: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B)>) {
+    init<A: View, B: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
                       Self.viewType(from: content().value.1)]
     }
     
-    init<A: View, B: View, C: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C)>) {
+    init<A: View, B: View, C: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -85,7 +110,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.2)]
     }
     
-    init<A: View, B: View, C: View, D: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
+    init<A: View, B: View, C: View, D: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -94,7 +119,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.3)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E)>) {
+    init<A: View, B: View, C: View, D: View, E: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -104,7 +129,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.4)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -115,7 +140,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.5)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -127,7 +152,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.6)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G, H)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G, H)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -140,7 +165,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.7)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
@@ -154,7 +179,7 @@ public extension WrappingHStack {
                       Self.viewType(from: content().value.8)]
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: Alignment = .topLeading, spacing: CGFloat = 8, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = [Self.viewType(from: content().value.0),
