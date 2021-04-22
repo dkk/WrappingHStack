@@ -17,17 +17,25 @@ struct ExampleView: View {
                 .frame(width: 20, height: 20)
                 .background(Color.purple)
             
-            Text("1234567898")
-                .bold()
+            NewLine()
+            
+            Text("NL")
+            
+            Image(systemName: "face.dashed")
+                .font(.title)
+                .border(Color.green)
             
             Text("bcdefghijklmnopqrs")
                 .font(.title)
-                            
+            
             WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
                 Text("Item: \($0)")
                     .padding(.all, 12)
                     .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }.frame(width: 380, height: 150)
+            }.frame(width: 380)
+            
+            Text("1234567898")
+                .bold()
         }
     }
     
@@ -36,22 +44,22 @@ struct ExampleView: View {
         switch exampleType {
         case .leading:
             example(alignment: .leading, spacing: .constant(0))
-            
+
         case .center:
             example(alignment: .center, spacing: .constant(0))
-            
+
         case .trailing:
             example(alignment: .trailing, spacing: .constant(0))
-            
+
         case .dynamicLeading:
             example(alignment: .leading, spacing: .dynamic(minSpacing: 0))
-            
+
         case .dynamicCenter:
             example(alignment: .center, spacing: .dynamic(minSpacing: 0))
-            
+
         case .dynamicTrailing:
             example(alignment: .trailing, spacing: .dynamic(minSpacing: 0))
-            
+
         case .dynamicIncludingBorders:
             example(alignment: .leading, spacing: .dynamicIncludingBorders(minSpacing: 0))
         }

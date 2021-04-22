@@ -2,10 +2,10 @@ import SwiftUI
 
 // based on https://swiftui.diegolavalle.com/posts/linewrapping-stacks/
 struct InternalWrappingHStack: View {
-    var width: CGFloat
-    var alignment: HorizontalAlignment
-    var spacing: WrappingHStack.Spacing
-    var content: [WrappingHStack.ViewType]
+    let width: CGFloat
+    let alignment: HorizontalAlignment
+    let spacing: WrappingHStack.Spacing
+    let content: [WrappingHStack.ViewType]
     
     var firstItemOfEachLane: [Int] {
         return content
@@ -64,7 +64,7 @@ struct InternalWrappingHStack: View {
     
     var body: some View {
         VStack(alignment: alignment, spacing: 0) {
-            ForEach(0 ..< totalLanes, id: \.self) { laneIndex in                
+            ForEach(0 ..< totalLanes, id: \.self) { laneIndex in               
                 HStack(spacing: 0) {
                     if alignment == .center || alignment == .trailing, shouldHaveSideSpacers(lane: laneIndex) {
                         Spacer(minLength: 0)

@@ -43,9 +43,9 @@ public struct WrappingHStack: View {
         }
     }
     
-    var items: [ViewType]
-    var alignment: HorizontalAlignment
-    var spacing: Spacing
+    let items: [ViewType]
+    let alignment: HorizontalAlignment
+    let spacing: Spacing
     @State private var height: CGFloat = 0
     
     public var body: some View {
