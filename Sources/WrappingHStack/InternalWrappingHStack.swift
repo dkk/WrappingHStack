@@ -48,52 +48,38 @@ struct InternalWrappingHStack: View {
     
     var body: some View {
         VStack(alignment: alignment, spacing: 0) {
-            ForEach(0 ..< totalLanes, id: \.self) { laneIndex in
-                if case .constant(let exactSpacing) = spacing {
-                    HStack(spacing: 0) {
-                        if alignment == .center || alignment == .trailing {
-                            Spacer(minLength: 0)
-                        }
-                        ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
-                            
-                            if case .any(let anyView) = content[$0] {
-                                anyView
-                            }
-                            
-                            if endOf(lane: laneIndex) != $0 {
-                                Spacer(minLength: 0)
-                                    .frame(width: exactSpacing)
-                            }
+            ForEach(0 ..< totalLanes, id: \.self) { laneIndex in                
+                HStack(spacing: 0) {
+                    if case .constant = spacing, alignment == .center || alignment == .trailing {
+                        Spacer(minLength: 0)
+                    }
+                    
+                    ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
+                        if case .dynamicIncludingBorders = spacing, startOf(lane: laneIndex) == $0 {
+                            Spacer(minLength: spacing.estimatedSpacing)
                         }
                         
-                        if alignment == .center || alignment == .leading {
-                            Spacer(minLength: 0)
+                        if case .any(let anyView) = content[$0] {
+                            anyView
+                        }
+                        
+                        if endOf(lane: laneIndex) != $0 {
+                            if case .constant(let exactSpacing) = spacing {
+                                Spacer(minLength: 0)
+                                    .frame(width: exactSpacing)
+                            } else {
+                                Spacer(minLength: spacing.estimatedSpacing)
+                            } 
+                        } else if case .dynamicIncludingBorders = spacing {
+                            Spacer(minLength: spacing.estimatedSpacing)
                         }
                     }
-                    .frame(maxWidth: .infinity)
-                } else {
-                    if case .dynamicIncludingBorders = spacing {
-                        Spacer(minLength: spacing.estimatedSpacing)
+                    
+                    if case .constant = spacing, alignment == .center || alignment == .leading {
+                        Spacer(minLength: 0)
                     }
-                    HStack(spacing: 0) {
-                        ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
-                            if case .dynamicIncludingBorders = spacing, startOf(lane: laneIndex) == $0 {
-                                Spacer(minLength: spacing.estimatedSpacing)
-                            }
-                            
-                            if case .any(let anyView) = content[$0] {
-                                anyView
-                            }
-                            
-                            if endOf(lane: laneIndex) != $0 {
-                                Spacer(minLength: spacing.estimatedSpacing)
-                            } else if case .dynamicIncludingBorders = spacing {
-                                Spacer(minLength: spacing.estimatedSpacing)
-                            }
-                        }
-                    }
-                    .frame(maxWidth: .infinity)
                 }
+                .frame(maxWidth: .infinity)
             }
         }
     }
