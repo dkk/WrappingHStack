@@ -2,53 +2,70 @@ import SwiftUI
 import WrappingHStack
 
 struct ExampleView: View {
+    enum ExampleType: String, CaseIterable {
+        case leading, center, trailing, dynamicLeading, dynamicCenter, dynamicTrailing, dynamicIncludingBorders
+    }
+    
+    @State var exampleType: ExampleType
+    
+    func example(alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing) -> some View {
+        WrappingHStack(alignment: alignment, spacing: spacing) {
+            Text("WrappingHStack")
+            
+            Image(systemName: "scribble")
+                .font(.title)
+                .frame(width: 20, height: 20)
+                .background(Color.purple)
+            
+            Text("1234567898")
+                .bold()
+            
+            Text("bcdefghijklmnopqrs")
+                .font(.title)
+                            
+            WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+            }.frame(width: 380, height: 150)
+        }
+    }
+    
+    
     var body: some View {
-        VStack(alignment: .leading) {
-            Text("Leading:")
-                .font(.headline)
-            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .constant(0)) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }
+        switch exampleType {
+        case .leading:
+            example(alignment: .leading, spacing: .constant(0))
             
-            Text("Center:")
-                .font(.headline)
-            WrappingHStack(1...7, id:\.self, alignment: .center, spacing: .constant(0)) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }
+        case .center:
+            example(alignment: .center, spacing: .constant(0))
             
-            Text("Trailing:")
-                .font(.headline)
-            WrappingHStack(1...7, id:\.self, alignment: .trailing, spacing: .constant(0)) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }
+        case .trailing:
+            example(alignment: .trailing, spacing: .constant(0))
             
-            Text("Dynamic:")
-                .font(.headline)
-            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .dynamic(minSpacing: 0)) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }
+        case .dynamicLeading:
+            example(alignment: .leading, spacing: .dynamic(minSpacing: 0))
             
-            Text("Dynamic Including Borders:")
-                .font(.headline)
-            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .dynamicIncludingBorders(minSpacing: 0)) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
-            }
+        case .dynamicCenter:
+            example(alignment: .center, spacing: .dynamic(minSpacing: 0))
+            
+        case .dynamicTrailing:
+            example(alignment: .trailing, spacing: .dynamic(minSpacing: 0))
+            
+        case .dynamicIncludingBorders:
+            example(alignment: .leading, spacing: .dynamicIncludingBorders(minSpacing: 0))
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ExampleView()
+        Group {
+            ForEach(ExampleView.ExampleType.allCases, id: \.self) {
+                ExampleView(exampleType: $0)
+                    .previewDisplayName($0.rawValue)
+            }
+        }
+        .previewLayout(.fixed(width: 380, height: 250))
     }
 }

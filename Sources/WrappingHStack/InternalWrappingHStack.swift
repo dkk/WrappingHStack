@@ -7,55 +7,73 @@ struct InternalWrappingHStack: View {
     var spacing: WrappingHStack.Spacing
     var content: [WrappingHStack.ViewType]
     
-    var firstItems: [Int] {
-        return content.enumerated().reduce((firstItems: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItems: [Int], currentLineWidth: CGFloat) in
-            var (firstItems, currentLineWidth) = result
-            
-            switch contentIterator.element {
-            case .newLine:
-                return (firstItems + [contentIterator.offset], 0)
-            case .any(let anyView):
-                #if os(iOS)
-                let hostingController = UIHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
-                #else
-                let hostingController = NSHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
-                #endif
+    var firstItemOfEachLane: [Int] {
+        return content
+            .enumerated()
+            .reduce((firstItems: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItemOfEachLane: [Int], currentLineWidth: CGFloat) in
+                var (firstItemOfEachLane, currentLineWidth) = result
                 
-                let itemWidth = hostingController.view.intrinsicContentSize.width
-                
-                if result.currentLineWidth + itemWidth + spacing.estimatedSpacing > width {
-                    currentLineWidth = itemWidth
-                    firstItems.append(contentIterator.offset)
-                } else {
-                    currentLineWidth += itemWidth + spacing.estimatedSpacing
+                switch contentIterator.element {
+                case .newLine:
+                    return (firstItemOfEachLane + [contentIterator.offset], width)
+                case .any(let anyView):
+                    #if os(iOS)
+                    let hostingController = UIHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
+                    #else
+                    let hostingController = NSHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
+                    #endif
+                    
+                    let itemWidth = hostingController.view.intrinsicContentSize.width
+                    
+                    if result.currentLineWidth + itemWidth + spacing.estimatedSpacing > width {
+                        currentLineWidth = itemWidth
+                        firstItemOfEachLane.append(contentIterator.offset)
+                    } else {
+                        currentLineWidth += itemWidth + spacing.estimatedSpacing
+                    }
+                    return (firstItemOfEachLane, currentLineWidth)
                 }
-                return (firstItems, currentLineWidth)
-            }
-        }.0
+            }.0
     }
     
     var totalLanes: Int {
-        firstItems.count
+        firstItemOfEachLane.count
     }
     
     func startOf(lane i: Int) -> Int {
-        firstItems[i]
+        firstItemOfEachLane[i]
     }
     
     func endOf(lane i: Int) -> Int {
-        i == totalLanes - 1 ? content.count - 1 : firstItems[i + 1] - 1
+        i == totalLanes - 1 ? content.count - 1 : firstItemOfEachLane[i + 1] - 1
+    }
+    
+    func hasExactlyOneElement(lane i: Int) -> Bool {
+        startOf(lane: i) == endOf(lane: i)
+    }
+    
+    func shouldHaveSideSpacers(lane i: Int) -> Bool {
+        if case .constant = spacing {
+            return true
+        }
+        if case .dynamic = spacing, hasExactlyOneElement(lane: i) {
+            return true
+        }
+        return false
     }
     
     var body: some View {
         VStack(alignment: alignment, spacing: 0) {
             ForEach(0 ..< totalLanes, id: \.self) { laneIndex in                
                 HStack(spacing: 0) {
-                    if case .constant = spacing, alignment == .center || alignment == .trailing {
+                    if alignment == .center || alignment == .trailing, shouldHaveSideSpacers(lane: laneIndex) {
                         Spacer(minLength: 0)
                     }
                     
                     ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
-                        if case .dynamicIncludingBorders = spacing, startOf(lane: laneIndex) == $0 {
+                        if case .dynamicIncludingBorders = spacing,
+                           startOf(lane: laneIndex) == $0
+                        {
                             Spacer(minLength: spacing.estimatedSpacing)
                         }
                         
@@ -75,7 +93,7 @@ struct InternalWrappingHStack: View {
                         }
                     }
                     
-                    if case .constant = spacing, alignment == .center || alignment == .leading {
+                    if alignment == .center || alignment == .leading, shouldHaveSideSpacers(lane: laneIndex) {
                         Spacer(minLength: 0)
                     }
                 }

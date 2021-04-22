@@ -1,9 +1,13 @@
 import SwiftUI
 
-/// WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positions overflowing elements on next lines.
-/// It can be customized by using alignment (controls the alignment of the items, it will get ignored when combined with a `.dynamic` spacing
-/// for all but last lines with single elements), spacing (use `.constant` for fixed spacing and `.dynamic` to have the items fill the width
-/// of the WrappingHSTack)
+/// WrappingHStack is a UI Element that works in a very similar way to HStack,
+///  but automatically positions overflowing elements on next lines.
+///  It can be customized by using alignment (controls the alignment of the
+///  items, it may get ignored when combined with `dynamicIncludingBorders`
+///  or `.dynamic` spacing), spacing (use `.constant` for fixed spacing,
+///  `.dynamic` to have the items fill the width of the WrappingHSTack and
+///  `.dynamicIncludingBorders` to fill the full width with equal spacing
+///  between items and from the items to the border.)
 public struct WrappingHStack: View {
     private struct CGFloatPreferenceKey: PreferenceKey {
         static var defaultValue = CGFloat.zero
@@ -81,9 +85,14 @@ public extension WrappingHStack {
     /// - Parameters:
     ///   - data: The items to show
     ///   - id: The `KeyPath` to use as id for the items   
-    ///   - alignment: Controls the alignment of the items. This will get ignored when combined with a `.dynamic` spacing for all
-    ///     but last lines with single elements
-    ///   - spacing: Use `.constant` for fixed spacing and `.dynamic` to have the items fill the width of the WrappingHSTack
+    ///   - alignment: Controls the alignment of the items. This may get
+    ///    ignored when combined with `.dynamicIncludingBorders` or
+    ///    `.dynamic` spacing.
+    ///   - spacing: Use `.constant` for fixed spacing, `.dynamic` to have
+    ///    the items fill the width of the WrappingHSTack and
+    ///    `.dynamicIncludingBorders` to fill the full width with equal spacing
+    ///    between items and from the items to the border.
+    ///   - content: The content and behavior of the view.
     init<Data: RandomAccessCollection, Content: View>(_ data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), content: @escaping (Data.Element) -> Content) {
         self.spacing = spacing
         self.alignment = alignment
