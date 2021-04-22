@@ -46,31 +46,48 @@ struct InternalWrappingHStack: View {
         i == totalLanes - 1 ? content.count - 1 : firstItems[i + 1] - 1
     }
     
-    private func line(laneIndex: Int) -> some View {
-        HStack(spacing: spacing.estimatedSpacing) {
-            ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
-                if case .any(let anyView) = content[$0] {
-                    anyView
-                }
-            }
-        }
-    }
-    
     var body: some View {
         VStack(alignment: alignment, spacing: 0) {
             ForEach(0 ..< totalLanes, id: \.self) { laneIndex in
-                if case .constant = spacing {
-                    line(laneIndex: laneIndex)
-                } else if laneIndex == totalLanes - 1 && startOf(lane: laneIndex) == endOf(lane: laneIndex) {
-                    line(laneIndex: laneIndex)
-                } else {
+                if case .constant(let exactSpacing) = spacing {
                     HStack(spacing: 0) {
+                        if alignment == .center || alignment == .trailing {
+                            Spacer(minLength: 0)
+                        }
                         ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
+                            
                             if case .any(let anyView) = content[$0] {
                                 anyView
                             }
                             
                             if endOf(lane: laneIndex) != $0 {
+                                Spacer(minLength: 0)
+                                    .frame(width: exactSpacing)
+                            }
+                        }
+                        
+                        if alignment == .center || alignment == .leading {
+                            Spacer(minLength: 0)
+                        }
+                    }
+                    .frame(maxWidth: .infinity)
+                } else {
+                    if case .dynamicIncludingBorders = spacing {
+                        Spacer(minLength: spacing.estimatedSpacing)
+                    }
+                    HStack(spacing: 0) {
+                        ForEach(startOf(lane: laneIndex) ... endOf(lane: laneIndex), id: \.self) {
+                            if case .dynamicIncludingBorders = spacing, startOf(lane: laneIndex) == $0 {
+                                Spacer(minLength: spacing.estimatedSpacing)
+                            }
+                            
+                            if case .any(let anyView) = content[$0] {
+                                anyView
+                            }
+                            
+                            if endOf(lane: laneIndex) != $0 {
+                                Spacer(minLength: spacing.estimatedSpacing)
+                            } else if case .dynamicIncludingBorders = spacing {
                                 Spacer(minLength: spacing.estimatedSpacing)
                             }
                         }

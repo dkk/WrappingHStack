@@ -3,63 +3,47 @@ import WrappingHStack
 
 struct ExampleView: View {
     var body: some View {
-        VStack(spacing: 0) {
-            Text("Above")
-                .background(Rectangle().stroke())
-            HStack(spacing: 0) {
-                Text("Left")
-                    .background(Rectangle().stroke())
-                
-                WrappingHStack {
-                    Text("WrappingHStack")
-                        .padding()
-                        .font(.title)
-                        .border(Color.black)
-                        .padding(.vertical, 10)
-                                        
-                    Group {
-                        Text("can")
-                        Text("handle different element")
-                    }
-                    
-                    HStack {
-                        RoundedRectangle(cornerRadius: 5)
-                            .overlay(Text("types").foregroundColor(.white))
-                        
-                        
-                        Image(systemName: "exclamationmark.circle.fill")
-                            .font(.title)
-                            .foregroundColor(.purple)
-                    }
-                    
-                    NewLine()
-                    
-                    Text("and loop items:")
-                        .bold()
-                        .padding(.bottom, 10)
-                    
-                    NewLine()
-                    
-                    WrappingHStack(1...20, id:\.self) {
-                        Text("Item: \($0)")
-                            .padding(3)
-                            .background(Rectangle().stroke())
-                            .padding(3)
-                    }
-                }
-                .padding(10)
-                .border(Color.black)
-                .padding(2)
-                
-                Text("Right")
-                    .background(Rectangle().stroke())
+        VStack(alignment: .leading) {
+            Text("Leading:")
+                .font(.headline)
+            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .constant(0)) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
             }
             
-            Text("Bellow")
-                .background(Rectangle().stroke())
+            Text("Center:")
+                .font(.headline)
+            WrappingHStack(1...7, id:\.self, alignment: .center, spacing: .constant(0)) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+            }
+            
+            Text("Trailing:")
+                .font(.headline)
+            WrappingHStack(1...7, id:\.self, alignment: .trailing, spacing: .constant(0)) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+            }
+            
+            Text("Dynamic:")
+                .font(.headline)
+            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .dynamic(minSpacing: 0)) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+            }
+            
+            Text("Dynamic Including Borders:")
+                .font(.headline)
+            WrappingHStack(1...7, id:\.self, alignment: .leading, spacing: .dynamicIncludingBorders(minSpacing: 0)) {
+                Text("Item: \($0)")
+                    .padding(.all, 12)
+                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+            }
         }
-        .padding(2)
-        
     }
 }
 

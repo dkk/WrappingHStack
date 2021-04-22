@@ -27,12 +27,13 @@ public struct WrappingHStack: View {
     public enum Spacing {
         case constant(CGFloat)
         case dynamic(minSpacing: CGFloat)
+        case dynamicIncludingBorders(minSpacing: CGFloat)
         
         internal var estimatedSpacing: CGFloat {
             switch self {
             case .constant(let constantSpacing):
                 return constantSpacing
-            case .dynamic(minSpacing: let minSpacing):
+            case .dynamic(minSpacing: let minSpacing), .dynamicIncludingBorders(minSpacing: let minSpacing):
                 return minSpacing
             }
         }
