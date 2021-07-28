@@ -6,9 +6,15 @@ struct InternalWrappingHStack: View {
     let alignment: HorizontalAlignment
     let spacing: WrappingHStack.Spacing
     let content: [WrappingHStack.ViewType]
-    
-    var firstItemOfEachLane: [Int] {
-        return content
+    let firstItemOfEachLane: [Int]
+
+    init(width: CGFloat, alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing, content: [WrappingHStack.ViewType]) {
+        self.width = width
+        self.alignment = alignment
+        self.spacing = spacing
+        self.content = content
+
+        firstItemOfEachLane = content
             .enumerated()
             .reduce((firstItems: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItemOfEachLane: [Int], currentLineWidth: CGFloat) in
                 var (firstItemOfEachLane, currentLineWidth) = result
