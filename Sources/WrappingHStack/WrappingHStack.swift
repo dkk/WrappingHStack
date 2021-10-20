@@ -93,7 +93,7 @@ public extension WrappingHStack {
     ///    `.dynamicIncludingBorders` to fill the full width with equal spacing
     ///    between items and from the items to the border.
     ///   - content: The content and behavior of the view.
-    init<Data: RandomAccessCollection, Content: View>(_ data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), content: @escaping (Data.Element) -> Content) {
+    init<Data: RandomAccessCollection, Content: View>(_ data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.spacing = spacing
         self.alignment = alignment
         self.items = data.map { Self.viewType(from: content($0[keyPath: id])) }
