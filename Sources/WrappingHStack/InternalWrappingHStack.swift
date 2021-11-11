@@ -69,7 +69,7 @@ struct InternalWrappingHStack: View {
     }
     
     var body: some View {
-        VStack(alignment: alignment, spacing: 0) {
+        VStack(alignment: alignment, spacing: spacing.verticalSpacing) {
             ForEach(0 ..< totalLanes, id: \.self) { laneIndex in               
                 HStack(spacing: 0) {
                     if alignment == .center || alignment == .trailing, shouldHaveSideSpacers(lane: laneIndex) {
@@ -88,7 +88,7 @@ struct InternalWrappingHStack: View {
                         }
                         
                         if endOf(lane: laneIndex) != $0 {
-                            if case .constant(let exactSpacing) = spacing {
+                            if case .constant(let exactSpacing, _) = spacing {
                                 Spacer(minLength: 0)
                                     .frame(width: exactSpacing)
                             } else {
