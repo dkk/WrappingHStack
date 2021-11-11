@@ -29,18 +29,27 @@ public struct WrappingHStack: View {
     }
     
     public enum Spacing {
-        case constant(CGFloat)
-        case dynamic(minSpacing: CGFloat)
-        case dynamicIncludingBorders(minSpacing: CGFloat)
+        case constant(_ horizontal: CGFloat, vertical: CGFloat = 0)
+        case dynamic(minSpacing: CGFloat, vertical: CGFloat = 0)
+        case dynamicIncludingBorders(minSpacing: CGFloat, vertical: CGFloat = 0)
         
         internal var estimatedSpacing: CGFloat {
             switch self {
-            case .constant(let constantSpacing):
+            case .constant(let constantSpacing, _):
                 return constantSpacing
-            case .dynamic(minSpacing: let minSpacing), .dynamicIncludingBorders(minSpacing: let minSpacing):
+            case .dynamic(minSpacing: let minSpacing, _), .dynamicIncludingBorders(minSpacing: let minSpacing, _):
                 return minSpacing
             }
         }
+
+      internal var verticalSpacing: CGFloat {
+          switch self {
+          case .constant(_, vertical: let verticalSpacing),
+              .dynamic(_, vertical: let verticalSpacing),
+              .dynamicIncludingBorders(_, vertical: let verticalSpacing):
+              return verticalSpacing
+          }
+      }
     }
     
     let items: [ViewType]
