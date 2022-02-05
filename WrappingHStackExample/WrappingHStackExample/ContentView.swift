@@ -9,7 +9,7 @@ struct ExampleView: View {
     @State var exampleType: ExampleType
     
     func example(alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing) -> some View {
-        WrappingHStack(alignment: alignment, spacing: spacing) {
+        WrappingHStack(alignment: alignment, spacing: spacing, lineSpacing: 10) {
             Text("WrappingHStack")
             
             Image(systemName: "scribble")
@@ -28,7 +28,7 @@ struct ExampleView: View {
             Text("bcdefghijklmnopqrs")
                 .font(.title)
             
-            WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
+            WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing, lineSpacing: 10) {
                 Text("Item: \($0)")
                     .padding(.all, 12)
                     .background(RoundedRectangle(cornerRadius: 10).stroke())

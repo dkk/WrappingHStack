@@ -7,11 +7,13 @@ struct InternalWrappingHStack: View {
     let spacing: WrappingHStack.Spacing
     let content: [WrappingHStack.ViewType]
     let firstItemOfEachLane: [Int]
+    let lineSpacing: CGFloat
 
-    init(width: CGFloat, alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing, content: [WrappingHStack.ViewType]) {
+    init(width: CGFloat, alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing, lineSpacing: CGFloat, content: [WrappingHStack.ViewType]) {
         self.width = width
         self.alignment = alignment
         self.spacing = spacing
+        self.lineSpacing = lineSpacing
         self.content = content
 
         firstItemOfEachLane = content
@@ -69,7 +71,7 @@ struct InternalWrappingHStack: View {
     }
     
     var body: some View {
-        VStack(alignment: alignment, spacing: 0) {
+        VStack(alignment: alignment, spacing: lineSpacing) {
             ForEach(0 ..< totalLanes, id: \.self) { laneIndex in               
                 HStack(spacing: 0) {
                     if alignment == .center || alignment == .trailing, shouldHaveSideSpacers(lane: laneIndex) {
