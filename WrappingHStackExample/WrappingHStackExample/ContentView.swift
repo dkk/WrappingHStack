@@ -28,7 +28,7 @@ struct ExampleView: View {
             Text("bcdefghijklmnopqrs")
                 .font(.title)
             
-            WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing, lineSpacing: 10) {
+            WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
                 Text("Item: \($0)")
                     .padding(.all, 12)
                     .background(RoundedRectangle(cornerRadius: 10).stroke())

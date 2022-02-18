@@ -7,7 +7,8 @@ import SwiftUI
 ///  or `.dynamic` spacing), spacing (use `.constant` for fixed spacing,
 ///  `.dynamic` to have the items fill the width of the WrappingHSTack and
 ///  `.dynamicIncludingBorders` to fill the full width with equal spacing
-///  between items and from the items to the border.)
+///  between items and from the items to the border.) and lineSpacing (which
+///  adds a vertical separation between lines)
 public struct WrappingHStack: View {
     private struct CGFloatPreferenceKey: PreferenceKey {
         static var defaultValue = CGFloat.zero
@@ -94,6 +95,8 @@ public extension WrappingHStack {
     ///    the items fill the width of the WrappingHSTack and
     ///    `.dynamicIncludingBorders` to fill the full width with equal spacing
     ///    between items and from the items to the border.
+    ///   - lineSpacing: The distance in points between the bottom of one line
+    ///    fragment and the top of the next
     ///   - content: The content and behavior of the view.
     init<Data: RandomAccessCollection, Content: View>(_ data: Data, id: KeyPath<Data.Element, Data.Element> = \.self, alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping (Data.Element) -> Content) {
         self.spacing = spacing
