@@ -69,7 +69,9 @@ public struct WrappingHStack: View {
         }
         .frame(height: height)
         .onPreferenceChange(CGFloatPreferenceKey.self, perform: {
-            height = $0
+            if abs(height - $0) > 1 {
+                height = $0
+            }
         })
     }
 }
