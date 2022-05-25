@@ -18,7 +18,7 @@ struct InternalWrappingHStack: View {
 
         firstItemOfEachLane = content
             .enumerated()
-            .reduce((firstItems: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItemOfEachLane: [Int], currentLineWidth: CGFloat) in
+            .reduce((firstItemOfEachLane: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItemOfEachLane: [Int], currentLineWidth: CGFloat) in
                 var (firstItemOfEachLane, currentLineWidth) = result
                 
                 switch contentIterator.element {
