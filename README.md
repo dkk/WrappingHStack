@@ -91,4 +91,4 @@ You can contribute to this project by helping me solve any [reported issues or f
 If you just want to say thanks, you could [buy me a coffee ☕️](https://www.buymeacoffee.com/kloeck).
 
 ## License
-WrappingHStack is released under the [MIT License](LICENSE).
+WrappingHStack was originally developed by Daniel Klöck and is released under the [MIT License](LICENSE).
