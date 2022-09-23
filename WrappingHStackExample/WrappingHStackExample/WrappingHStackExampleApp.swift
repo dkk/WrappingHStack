@@ -15,6 +15,16 @@ struct WrappingHStackExampleApp: App {
                         
                         Divider()
                     }
+
+                    NavigationView {
+                        VStack {
+                            NavigationLink("To The WrappingHStack") {
+                                NavigationView {
+                                    ExampleView(exampleType: .center)
+                                }
+                            }
+                        }
+                    }
                 }
             }
         }

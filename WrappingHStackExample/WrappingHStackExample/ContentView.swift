@@ -73,6 +73,17 @@ struct ContentView_Previews: PreviewProvider {
                 ExampleView(exampleType: $0)
                     .previewDisplayName($0.rawValue)
             }
+
+            NavigationView {
+                VStack {
+                    NavigationLink("To the WrappingHStack") {
+                        NavigationView {
+                            ExampleView(exampleType: .center)
+                        }
+                    }
+                }
+            }
+            .previewDisplayName("Link")
         }
         .previewLayout(.fixed(width: 380, height: 250))
     }

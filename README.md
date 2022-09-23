@@ -68,6 +68,22 @@ WrappingHStack(1...30, id:\.self) {
 }
 ```
 
+### Item positioning
+
+You control the position of the items by using the parameter `alignment`, which sets the `HorizontalAlignment` of the items. I.e. leading, trailing or centered.
+
+For even more convenience and flexibility, `WrappingHSTack` offers the parameter `spacing`, that defines how the spacing will be calculated. It can be one of the following types:
+* `.constant`: for fixed spacing, each line starts with an item and the horizontal separation between any 2 items is the given value.
+* `.dynamic`: to have the items fill the width of the WrappingHSTack. You can pass a minimal spacing.
+* `.dynamicIncludingBorders` to fill the full width with equal spacing between items and from the items to the border. You can pass a minimal spacing.
+
+## Known Issues
+
+* [Issue #15](https://github.com/dkk/WrappingHStack/issues/15): Item sizes are calculated incorrectly when WrappingHStack has modifiers that change the size of its elements.
+* [Issue #17](https://github.com/dkk/WrappingHStack/issues/17): Spacing always applied around conditional views, even when they're missing.
+* [Issue #16](https://github.com/dkk/WrappingHStack/issues/26): Workaround needed when using `WrappingHStack` in a `NavigationLink` (iOS16 only).
+* [Issue #10](https://github.com/dkk/WrappingHStack/issues/10): SPM cannot resolve the dependency (Xcode 11.3.1 only).
+
 ## Contribute
 You can contribute to this project by helping me solve any [reported issues or feature requests](https://github.com/dkk/WrappingHStack/issues) and creating a pull request.
 
