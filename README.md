@@ -45,6 +45,13 @@ Requirements iOS 13+
 ```swift
 .package(url: "https://github.com/dkk/WrappingHStack", .upToNextMajor(from: "2.0.0"))
 ```
+
+### Cocoapods
+Simply add the following line to your `Podfile`:
+```ruby
+pod 'WrappingHStack'
+``` 
+
 ## Usage
 
 Import the WrappingHStack package to your view:
