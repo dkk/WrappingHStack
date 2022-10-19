@@ -31,7 +31,7 @@ struct InternalWrappingHStack: View {
                     let hostingController = NSHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
                     #endif
                     
-                    let itemWidth = hostingController.view.intrinsicContentSize.width
+                    let itemWidth = hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
                     
                     if result.currentLineWidth + itemWidth + spacing.estimatedSpacing > width {
                         currentLineWidth = itemWidth
