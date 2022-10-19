@@ -87,7 +87,6 @@ For even more convenience and flexibility, `WrappingHSTack` offers the parameter
 ## Known Issues
 
 * [Issue #15](https://github.com/dkk/WrappingHStack/issues/15): Item sizes are calculated incorrectly when WrappingHStack has modifiers that change the size of its elements.
-* [Issue #17](https://github.com/dkk/WrappingHStack/issues/17): Spacing always applied around conditional views, even when they're missing.
 * [Issue #16](https://github.com/dkk/WrappingHStack/issues/26): Workaround needed when using `WrappingHStack` in a `NavigationLink` (iOS16 only).
 * [Issue #10](https://github.com/dkk/WrappingHStack/issues/10): SPM cannot resolve the dependency (Xcode 11.3.1 only).
 

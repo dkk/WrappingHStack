@@ -29,9 +29,11 @@ struct ExampleView: View {
                 .font(.title)
             
             WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
-                Text("Item: \($0)")
-                    .padding(.all, 12)
-                    .background(RoundedRectangle(cornerRadius: 10).stroke())
+                if $0 != 2 {
+                    Text("Item: \($0)")
+                        .padding(.all, 12)
+                        .background(RoundedRectangle(cornerRadius: 10).stroke())
+                }
             }.frame(width: 380)
             
             Text("1234567898")
