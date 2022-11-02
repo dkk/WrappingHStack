@@ -8,20 +8,19 @@
 
 /* Begin PBXBuildFile section */
 		AF0EE8FF2603577D008FB2E9 /* WrappingHStackExampleApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0EE8FE2603577D008FB2E9 /* WrappingHStackExampleApp.swift */; };
-		AF0EE9012603577D008FB2E9 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0EE9002603577D008FB2E9 /* ContentView.swift */; };
+		AF0EE9012603577D008FB2E9 /* ExampleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF0EE9002603577D008FB2E9 /* ExampleView.swift */; };
 		AF0EE9032603577E008FB2E9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF0EE9022603577E008FB2E9 /* Assets.xcassets */; };
-		AF0EE9062603577E008FB2E9 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = AF0EE9052603577E008FB2E9 /* Preview Assets.xcassets */; };
-		AF0EE910260357E8008FB2E9 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = AF0EE90F260357E8008FB2E9 /* WrappingHStack */; };
+		AF37EE46291294F500B4B709 /* WrappingHStack in Resources */ = {isa = PBXBuildFile; fileRef = AF37EE45291294F500B4B709 /* WrappingHStack */; };
+		AF37EE5E291296E200B4B709 /* WrappingHStack in Frameworks */ = {isa = PBXBuildFile; productRef = AF37EE5D291296E200B4B709 /* WrappingHStack */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		AF0EE8FB2603577D008FB2E9 /* WrappingHStackExample.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = WrappingHStackExample.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		AF0EE8FE2603577D008FB2E9 /* WrappingHStackExampleApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrappingHStackExampleApp.swift; sourceTree = "<group>"; };
-		AF0EE9002603577D008FB2E9 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
+		AF0EE9002603577D008FB2E9 /* ExampleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExampleView.swift; sourceTree = "<group>"; };
 		AF0EE9022603577E008FB2E9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		AF0EE9052603577E008FB2E9 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		AF0EE9072603577E008FB2E9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		AF0EE9162603588D008FB2E9 /* WrappingHStack */ = {isa = PBXFileReference; lastKnownFileType = folder; name = WrappingHStack; path = ..; sourceTree = "<group>"; };
+		AF37EE45291294F500B4B709 /* WrappingHStack */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = WrappingHStack; path = ..; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,7 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF0EE910260357E8008FB2E9 /* WrappingHStack in Frameworks */,
+				AF37EE5E291296E200B4B709 /* WrappingHStack in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -39,7 +38,7 @@
 		AF0EE8F22603577D008FB2E9 = {
 			isa = PBXGroup;
 			children = (
-				AF0EE9162603588D008FB2E9 /* WrappingHStack */,
+				AF37EE45291294F500B4B709 /* WrappingHStack */,
 				AF0EE8FD2603577D008FB2E9 /* WrappingHStackExample */,
 				AF0EE8FC2603577D008FB2E9 /* Products */,
 			);
@@ -57,20 +56,11 @@
 			isa = PBXGroup;
 			children = (
 				AF0EE8FE2603577D008FB2E9 /* WrappingHStackExampleApp.swift */,
-				AF0EE9002603577D008FB2E9 /* ContentView.swift */,
+				AF0EE9002603577D008FB2E9 /* ExampleView.swift */,
 				AF0EE9022603577E008FB2E9 /* Assets.xcassets */,
 				AF0EE9072603577E008FB2E9 /* Info.plist */,
-				AF0EE9042603577E008FB2E9 /* Preview Content */,
 			);
 			path = WrappingHStackExample;
-			sourceTree = "<group>";
-		};
-		AF0EE9042603577E008FB2E9 /* Preview Content */ = {
-			isa = PBXGroup;
-			children = (
-				AF0EE9052603577E008FB2E9 /* Preview Assets.xcassets */,
-			);
-			path = "Preview Content";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -90,7 +80,7 @@
 			);
 			name = WrappingHStackExample;
 			packageProductDependencies = (
-				AF0EE90F260357E8008FB2E9 /* WrappingHStack */,
+				AF37EE5D291296E200B4B709 /* WrappingHStack */,
 			);
 			productName = WrappingHStackExample;
 			productReference = AF0EE8FB2603577D008FB2E9 /* WrappingHStackExample.app */;
@@ -120,7 +110,7 @@
 			);
 			mainGroup = AF0EE8F22603577D008FB2E9;
 			packageReferences = (
-				AF0EE90E260357E8008FB2E9 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
+				AF37EE5C291296E200B4B709 /* XCRemoteSwiftPackageReference "WrappingHStack" */,
 			);
 			productRefGroup = AF0EE8FC2603577D008FB2E9 /* Products */;
 			projectDirPath = "";
@@ -136,7 +126,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF0EE9062603577E008FB2E9 /* Preview Assets.xcassets in Resources */,
+				AF37EE46291294F500B4B709 /* WrappingHStack in Resources */,
 				AF0EE9032603577E008FB2E9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -148,7 +138,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				AF0EE9012603577D008FB2E9 /* ContentView.swift in Sources */,
+				AF0EE9012603577D008FB2E9 /* ExampleView.swift in Sources */,
 				AF0EE8FF2603577D008FB2E9 /* WrappingHStackExampleApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -340,7 +330,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
-		AF0EE90E260357E8008FB2E9 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
+		AF37EE5C291296E200B4B709 /* XCRemoteSwiftPackageReference "WrappingHStack" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/dkk/WrappingHStack.git";
 			requirement = {
@@ -351,9 +341,9 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
-		AF0EE90F260357E8008FB2E9 /* WrappingHStack */ = {
+		AF37EE5D291296E200B4B709 /* WrappingHStack */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = AF0EE90E260357E8008FB2E9 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
+			package = AF37EE5C291296E200B4B709 /* XCRemoteSwiftPackageReference "WrappingHStack" */;
 			productName = WrappingHStack;
 		};
 /* End XCSwiftPackageProductDependency section */

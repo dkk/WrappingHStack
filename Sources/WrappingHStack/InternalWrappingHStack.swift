@@ -75,7 +75,7 @@ struct InternalWrappingHStack: View {
 #if os(iOS)
         return UIHostingController(rootView: view).sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width > 0
 #else
-        return NSHostingController(rootView: anyView).sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width > 0
+        return NSHostingController(rootView: view).sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width > 0
 #endif
     }
     

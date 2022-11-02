@@ -5,29 +5,29 @@ struct ExampleView: View {
     enum ExampleType: String, CaseIterable {
         case leading, center, trailing, dynamicLeading, dynamicCenter, dynamicTrailing, dynamicIncludingBorders
     }
-    
+
     @State var exampleType: ExampleType
-    
+
     func example(alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing) -> some View {
         WrappingHStack(alignment: alignment, spacing: spacing, lineSpacing: 10) {
             Text("WrappingHStack")
-            
+
             Image(systemName: "scribble")
                 .font(.title)
                 .frame(width: 20, height: 20)
                 .background(Color.purple)
-            
+
             NewLine()
-            
+
             Text("NL")
-            
+
             Image(systemName: "face.dashed")
                 .font(.title)
                 .border(Color.green)
-            
+
             Text("bcdefghijklmnopqrs")
                 .font(.title)
-            
+
             WrappingHStack(1...9, id:\.self, alignment: alignment, spacing: spacing) {
                 if $0 != 2 {
                     Text("Item: \($0)")
@@ -35,13 +35,13 @@ struct ExampleView: View {
                         .background(RoundedRectangle(cornerRadius: 10).stroke())
                 }
             }.frame(width: 380)
-            
+
             Text("1234567898")
                 .bold()
         }
     }
-    
-    
+
+
     var body: some View {
         switch exampleType {
         case .leading:
@@ -68,7 +68,7 @@ struct ExampleView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
+struct ExampleView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             ForEach(ExampleView.ExampleType.allCases, id: \.self) {
