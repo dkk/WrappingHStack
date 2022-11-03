@@ -32,3 +32,4 @@ If applicable, add screenshots to help explain your problem.
 Add any other context about the problem here.
 
 **Simplified Example**
+If possible, please add a minimal example for the bug.
