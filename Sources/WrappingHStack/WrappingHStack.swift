@@ -10,7 +10,7 @@ import SwiftUI
 ///  between items and from the items to the border.) and lineSpacing (which
 ///  adds a vertical separation between lines)
 public struct WrappingHStack: View {
-    private struct CGFloatPreferenceKey: PreferenceKey {
+    private struct HeightPreferenceKey: PreferenceKey {
         static var defaultValue = CGFloat.zero
         static func reduce(value: inout CGFloat , nextValue: () -> CGFloat) {
             value = nextValue()
@@ -53,14 +53,14 @@ public struct WrappingHStack: View {
     public var body: some View {
         GeometryReader { geo in
             InternalWrappingHStack (
-                width: geo.frame(in: .global).width,
+                width: geo.size.width,
                 alignment: alignment,
                 spacing: spacing,
                 lineSpacing: lineSpacing,
                 content: items
             )
             .anchorPreference(
-                key: CGFloatPreferenceKey.self,
+                key: HeightPreferenceKey.self,
                 value: .bounds,
                 transform: {
                     geo[$0].size.height
@@ -68,7 +68,7 @@ public struct WrappingHStack: View {
             )
         }
         .frame(height: height)
-        .onPreferenceChange(CGFloatPreferenceKey.self, perform: {
+        .onPreferenceChange(HeightPreferenceKey.self, perform: {
             if abs(height - $0) > 1 {
                 height = $0
             }
