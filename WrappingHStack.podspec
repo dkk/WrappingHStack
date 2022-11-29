@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name             = 'WrappingHStack'
-  s.version          = '2.2.5'
+  s.version          = '2.2.7'
   s.summary          = 'Like HStack, but automatically positions overflowing elements on next lines.'
   s.description      = <<-DESC
   WrappingHStack is a UI Element that works in a very similar way to HStack, but automatically positions overflowing elements on next lines.
