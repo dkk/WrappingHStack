@@ -1,0 +1,17 @@
+name: CI
+on:
+  push:
+    tags:
+    - '*'
+    
+jobs:
+  build:
+  runs-on: macOS-latest
+    
+    steps:
+    - uses: actions/checkout@v1
+    - name: Publish to CocoaPod
+      env:
+        COCOAPODS_TRUNK_TOKEN: ${{ secrets.COCOAPODS_TRUNK_TOKEN }}
+      run: |
+        pod trunk push WrappingHStack.podspec
