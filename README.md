@@ -94,7 +94,6 @@ For even more convenience and flexibility, `WrappingHSTack` offers the parameter
 You can contribute to this project by helping me solve any [reported issues or feature requests](https://github.com/dkk/WrappingHStack/issues) and creating a pull request.
 
 ## Support
-If you just want to say thanks, you could [buy me a coffee ☕️](https://www.buymeacoffee.com/kloeck).
-
+[Sponsor this project](https://github.com/sponsors/dkk) to get a reward and give me a moral boost. 
 ## License
 WrappingHStack was originally developed by Daniel Klöck and is released under the [MIT License](LICENSE).
