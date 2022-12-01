@@ -3,7 +3,7 @@ import WrappingHStack
 
 struct ExampleView: View {
     enum ExampleType: String, CaseIterable {
-        case leading, center, trailing, dynamicLeading, dynamicCenter, dynamicTrailing, dynamicIncludingBorders
+        case leading, center, trailing, dynamicLeading, dynamicCenter, dynamicTrailing, dynamicIncludingBorders, long, longHStack
     }
     
     @State var exampleType: ExampleType
@@ -64,6 +64,66 @@ struct ExampleView: View {
 
         case .dynamicIncludingBorders:
             example(alignment: .leading, spacing: .dynamicIncludingBorders(minSpacing: 0))
+
+        case .long:
+            ScrollView {
+                VStack {
+                    ForEach(1...50, id: \.self) { index in
+                        WrappingHStack(1...20, id: \.self, alignment: .center, spacing: .constant(0)) {
+                            Text("\(index): \($0)")
+                                .padding(.all, 12)
+                                .background(RoundedRectangle(cornerRadius: 10).stroke())
+                        }
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.red))
+                    }
+
+                    Text("end")
+                }
+            }
+
+        case .longHStack:
+            ScrollView {
+                VStack {
+                    ForEach(1...50, id: \.self) { index in
+                        VStack {
+                            HStack(spacing: 0) {
+                                ForEach(1...6, id: \.self) {
+                                    Text("\(index): \($0)")
+                                        .padding(.all, 12)
+                                        .background(RoundedRectangle(cornerRadius: 10).stroke())
+                                }
+                            }
+
+                            HStack(spacing: 0) {
+                                ForEach(7...11, id: \.self) {
+                                    Text("\(index): \($0)")
+                                        .padding(.all, 12)
+                                        .background(RoundedRectangle(cornerRadius: 10).stroke())
+                                }
+                            }
+
+                            HStack(spacing: 0) {
+                                ForEach(12...16, id: \.self) {
+                                    Text("\(index): \($0)")
+                                        .padding(.all, 12)
+                                        .background(RoundedRectangle(cornerRadius: 10).stroke())
+                                }
+                            }
+
+                            HStack(spacing: 0) {
+                                ForEach(17...20, id: \.self) {
+                                    Text("\(index): \($0)")
+                                        .padding(.all, 12)
+                                        .background(RoundedRectangle(cornerRadius: 10).stroke())
+                                }
+                            }
+                        }
+                        .background(RoundedRectangle(cornerRadius: 10).stroke(Color.red))
+                    }
+
+                    Text("end")
+                }
+            }
         }
     }
 }
@@ -71,7 +131,7 @@ struct ExampleView: View {
 struct ExampleView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ForEach(ExampleView.ExampleType.allCases, id: \.self) {
+            ForEach(ExampleView.ExampleType.allCases.filter({ $0 != .long && $0 != .longHStack }), id: \.self) {
                 ExampleView(exampleType: $0)
                     .previewDisplayName($0.rawValue)
             }
@@ -80,7 +140,7 @@ struct ExampleView_Previews: PreviewProvider {
                 VStack {
                     NavigationLink("To the WrappingHStack") {
                         NavigationView {
-                            ExampleView(exampleType: .center)
+                            ExampleView(exampleType: .long)
                         }
                     }
                 }
