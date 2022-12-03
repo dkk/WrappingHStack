@@ -34,7 +34,7 @@ public struct WrappingHStack: View {
         case dynamic(minSpacing: CGFloat)
         case dynamicIncludingBorders(minSpacing: CGFloat)
         
-        internal var estimatedSpacing: CGFloat {
+        internal var minSpacing: CGFloat {
             switch self {
             case .constant(let constantSpacing):
                 return constantSpacing

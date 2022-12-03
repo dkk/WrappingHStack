@@ -25,24 +25,27 @@ struct InternalWrappingHStack: View {
                 case .newLine:
                     return (firstItemOfEachLine + [contentIterator.offset], width)
                 case .any(let anyView) where Self.isVisible(view: anyView):
-#if os(iOS)
-                    let hostingController = UIHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
-#else
-                    let hostingController = NSHostingController(rootView: HStack(spacing: spacing.estimatedSpacing) { anyView })
-#endif
-                    let itemWidth = hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
-
-                    if result.currentLineWidth + itemWidth + spacing.estimatedSpacing > width {
+                    let itemWidth = Self.getWidth(of: anyView)
+                    if result.currentLineWidth + itemWidth + spacing.minSpacing > width {
                         currentLineWidth = itemWidth
                         firstItemOfEachLine.append(contentIterator.offset)
                     } else {
-                        currentLineWidth += itemWidth + spacing.estimatedSpacing
+                        currentLineWidth += itemWidth + spacing.minSpacing
                     }
                     return (firstItemOfEachLine, currentLineWidth)
                 default:
                     return result
                 }
             }.0
+    }
+
+    static func getWidth(of anyView: AnyView) -> Double {
+#if os(iOS)
+        let hostingController = UIHostingController(rootView: HStack { anyView })
+#else
+        let hostingController = NSHostingController(rootView: HStack { anyView })
+#endif
+        return hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
     }
     
     var totalLines: Int {
@@ -91,7 +94,7 @@ struct InternalWrappingHStack: View {
                         if case .dynamicIncludingBorders = spacing,
                            startOf(line: lineIndex) == $0
                         {
-                            Spacer(minLength: spacing.estimatedSpacing)
+                            Spacer(minLength: spacing.minSpacing)
                         }
                         
                         if case .any(let anyView) = content[$0], Self.isVisible(view: anyView) {
@@ -104,11 +107,11 @@ struct InternalWrappingHStack: View {
                                     Spacer(minLength: 0)
                                         .frame(width: exactSpacing)
                                 } else {
-                                    Spacer(minLength: spacing.estimatedSpacing)
+                                    Spacer(minLength: spacing.minSpacing)
                                 }
                             }
                         } else if case .dynamicIncludingBorders = spacing {
-                            Spacer(minLength: spacing.estimatedSpacing)
+                            Spacer(minLength: spacing.minSpacing)
                         }
                     }
                     
