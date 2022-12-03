@@ -1,34 +1,24 @@
 import SwiftUI
 
-// based on https://swiftui.diegolavalle.com/posts/linewrapping-stacks/
+/// This View draws the WrappingHStack content taking into account the passed width, alignment and spacings.
+/// Note that the passed LineManager and ContentManager should be reused whenever possible.
 struct InternalWrappingHStack: View {
-    let width: CGFloat
     let alignment: HorizontalAlignment
     let spacing: WrappingHStack.Spacing
-    let content: [WrappingHStack.ViewType]
     let lineSpacing: CGFloat
     let lineManager: LineManager
+    let contentManager: ContentManager
 
-    init(width: CGFloat, alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing, lineSpacing: CGFloat, content: [WrappingHStack.ViewType], lineManager: LineManager) {
-        self.width = width
+    init(width: CGFloat, alignment: HorizontalAlignment, spacing: WrappingHStack.Spacing, lineSpacing: CGFloat, lineManager: LineManager, contentManager: ContentManager) {
         self.alignment = alignment
         self.spacing = spacing
         self.lineSpacing = lineSpacing
-        self.content = content
+        self.contentManager = contentManager
         self.lineManager = lineManager
 
         if !lineManager.isSetUp {
-            lineManager.setup(content: content, width: width, spacing: spacing)
+            lineManager.setup(contentManager: contentManager, width: width, spacing: spacing)
         }
-    }
-
-    @inline(__always) static func getWidth(of anyView: AnyView) -> Double {
-#if os(iOS)
-        let hostingController = UIHostingController(rootView: HStack { anyView })
-#else
-        let hostingController = NSHostingController(rootView: HStack { anyView })
-#endif
-        return hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
     }
     
     func shouldHaveSideSpacers(line i: Int) -> Bool {
@@ -39,10 +29,6 @@ struct InternalWrappingHStack: View {
             return true
         }
         return false
-    }
-
-    @inline(__always) static func isVisible(view: AnyView) -> Bool {
-        getWidth(of: view) > 0
     }
     
     var body: some View {
@@ -60,12 +46,12 @@ struct InternalWrappingHStack: View {
                             Spacer(minLength: spacing.minSpacing)
                         }
                         
-                        if case .any(let anyView) = content[$0], Self.isVisible(view: anyView) {
+                        if case .any(let anyView) = contentManager.items[$0], contentManager.isVisible(viewIndex: $0) {
                             anyView
                         }
                         
                         if lineManager.endOf(line: lineIndex) != $0 {
-                            if case .any(let anyView) = content[$0], !Self.isVisible(view: anyView) { } else {
+                            if case .any = contentManager.items[$0], !contentManager.isVisible(viewIndex: $0) { } else {
                                 if case .constant(let exactSpacing) = spacing {
                                     Spacer(minLength: 0)
                                         .frame(width: exactSpacing)

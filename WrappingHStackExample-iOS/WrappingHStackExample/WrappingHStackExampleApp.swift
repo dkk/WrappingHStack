@@ -23,11 +23,13 @@ struct WrappingHStackExampleApp: App {
                     }
                 }
 
-                NavigationView {
-                    VStack {
-                        NavigationLink("Long WrappingHStack") {
-                            NavigationView {
-                                ExampleView(exampleType: .long)
+                if !ProcessInfo.processInfo.arguments.contains("performanceTests_HS") {
+                    NavigationView {
+                        VStack {
+                            NavigationLink("Long WrappingHStack") {
+                                NavigationView {
+                                    ExampleView(exampleType: .long)
+                                }
                             }
                         }
                     }

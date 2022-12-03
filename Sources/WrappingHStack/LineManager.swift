@@ -1,41 +1,42 @@
 import Foundation
 
-/// This class calculates which items should be on which lines
+/// This class is in charge of calculating which items fit on which lines.
+/// It should be reused whenever possible.
 class LineManager {
-    private var content: [WrappingHStack.ViewType]!
+    private var contentManager: ContentManager!
     private var spacing: WrappingHStack.Spacing!
     private var width: CGFloat!
 
     lazy var firstItemOfEachLine: [Int] = {
-        content
-            .enumerated()
-            .reduce((firstItemOfEachLine: [], currentLineWidth: width)) { (result, contentIterator) -> (firstItemOfEachLine: [Int], currentLineWidth: CGFloat) in
-                var (firstItemOfEachLine, currentLineWidth) = result
-
-                switch contentIterator.element {
-                case .newLine:
-                    return (firstItemOfEachLine + [contentIterator.offset], width)
-                case .any(let anyView) where InternalWrappingHStack.isVisible(view: anyView):
-                    let itemWidth = InternalWrappingHStack.getWidth(of: anyView)
-                    if result.currentLineWidth + itemWidth + spacing.minSpacing > width {
-                        currentLineWidth = itemWidth
-                        firstItemOfEachLine.append(contentIterator.offset)
-                    } else {
-                        currentLineWidth += itemWidth + spacing.minSpacing
-                    }
-                    return (firstItemOfEachLine, currentLineWidth)
-                default:
-                    return result
+        var firstOfEach = [Int]()
+        var currentWidth: CGFloat = width
+        for (index, element) in contentManager.items.enumerated() {
+            switch element {
+            case .newLine:
+                firstOfEach += [index]
+                currentWidth = width
+            case .any where contentManager.isVisible(viewIndex: index):
+                let itemWidth = contentManager.widths[index]
+                if currentWidth + itemWidth + spacing.minSpacing > width {
+                    currentWidth = itemWidth
+                    firstOfEach.append(index)
+                } else {
+                    currentWidth += itemWidth + spacing.minSpacing
                 }
-            }.0
+            default:
+                break
+            }
+        }
+
+        return firstOfEach
     }()
 
     var isSetUp: Bool {
         width != nil
     }
 
-    func setup(content: [WrappingHStack.ViewType], width: CGFloat, spacing: WrappingHStack.Spacing) {
-        self.content = content
+    func setup(contentManager: ContentManager, width: CGFloat, spacing: WrappingHStack.Spacing) {
+        self.contentManager = contentManager
         self.width = width
         self.spacing = spacing
     }
@@ -49,7 +50,7 @@ class LineManager {
     }
 
     func endOf(line i: Int) -> Int {
-        i == totalLines - 1 ? content.count - 1 : firstItemOfEachLine[i + 1] - 1
+        i == totalLines - 1 ? contentManager.items.count - 1 : firstItemOfEachLine[i + 1] - 1
     }
 
     func hasExactlyOneElement(line i: Int) -> Bool {
