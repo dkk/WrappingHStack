@@ -70,7 +70,7 @@ struct ExampleView: View {
                 VStack {
                     ForEach(1...50, id: \.self) { index in
                         WrappingHStack(1...20, id: \.self, alignment: .center, spacing: .constant(0)) {
-                            Text("\(index): \($0)")
+                            Text("Item \(index): \($0)")
                                 .padding(.all, 12)
                                 .background(RoundedRectangle(cornerRadius: 10).stroke())
                         }
@@ -88,7 +88,7 @@ struct ExampleView: View {
                         VStack {
                             HStack(spacing: 0) {
                                 ForEach(1...6, id: \.self) {
-                                    Text("\(index): \($0)")
+                                    Text("Item \(index): \($0)")
                                         .padding(.all, 12)
                                         .background(RoundedRectangle(cornerRadius: 10).stroke())
                                 }
@@ -96,7 +96,7 @@ struct ExampleView: View {
 
                             HStack(spacing: 0) {
                                 ForEach(7...11, id: \.self) {
-                                    Text("\(index): \($0)")
+                                    Text("Item \(index): \($0)")
                                         .padding(.all, 12)
                                         .background(RoundedRectangle(cornerRadius: 10).stroke())
                                 }
@@ -104,7 +104,7 @@ struct ExampleView: View {
 
                             HStack(spacing: 0) {
                                 ForEach(12...16, id: \.self) {
-                                    Text("\(index): \($0)")
+                                    Text("Item \(index): \($0)")
                                         .padding(.all, 12)
                                         .background(RoundedRectangle(cornerRadius: 10).stroke())
                                 }
@@ -112,7 +112,7 @@ struct ExampleView: View {
 
                             HStack(spacing: 0) {
                                 ForEach(17...20, id: \.self) {
-                                    Text("\(index): \($0)")
+                                    Text("Item \(index): \($0)")
                                         .padding(.all, 12)
                                         .background(RoundedRectangle(cornerRadius: 10).stroke())
                                 }

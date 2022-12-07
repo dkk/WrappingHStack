@@ -69,6 +69,18 @@ public struct WrappingHStack: View {
 // Convenience inits that allows 10 Elements (just like HStack).
 // Based on https://alejandromp.com/blog/implementing-a-equally-spaced-stack-in-swiftui-thanks-to-tupleview/
 public extension WrappingHStack {
+    @inline(__always) private static func getWidth<V: View>(of view: V) -> Double {
+        if view is NewLine {
+            return .infinity
+        }
+
+#if os(iOS)
+        let hostingController = UIHostingController(rootView: view)
+#else
+        let hostingController = NSHostingController(rootView: view)
+#endif
+        return hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
+    }
     
     /// Instatiates a WrappingHStack
     /// - Parameters:
@@ -88,122 +100,231 @@ public extension WrappingHStack {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: data.map { ContentManager.ViewType(rawView: content($0[keyPath: id])) })
+        self.contentManager = ContentManager(
+            items: data.map { ViewType(rawView: content($0[keyPath: id])) },
+            getWidths: {
+                data.map {
+                    Self.getWidth(of: content($0[keyPath: id]))
+                }
+            })
     }
     
-    init<A: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> A) {
+    init<A: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> A) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content())])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content())],
+            getWidths: {
+                [Self.getWidth(of: content())]
+            })
     }
     
-    init<A: View, B: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B)>) {
+    init<A: View, B: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items:  [ContentManager.ViewType(rawView: content().value.0),
-                                                      ContentManager.ViewType(rawView: content().value.1)])
+        self.contentManager = ContentManager(
+            items:  [ViewType(rawView: content().value.0),
+                     ViewType(rawView: content().value.1)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C)>) {
+    init<A: View, B: View, C: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D)>) {
+    init<A: View, B: View, C: View, D: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E)>) {
+    init<A: View, B: View, C: View, D: View, E: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4)],
+                    getWidths: {
+                        [
+                            Self.getWidth(of: content().value.0),
+                            Self.getWidth(of: content().value.1),
+                            Self.getWidth(of: content().value.2),
+                            Self.getWidth(of: content().value.3),
+                            Self.getWidth(of: content().value.4)
+                        ]
+                    })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E, F)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4),
-                                                     ContentManager.ViewType(rawView: content().value.5)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4),
+                    ViewType(rawView: content().value.5)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3),
+                    Self.getWidth(of: content().value.4),
+                    Self.getWidth(of: content().value.5)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E, F, G)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4),
-                                                     ContentManager.ViewType(rawView: content().value.5),
-                                                     ContentManager.ViewType(rawView: content().value.6)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4),
+                    ViewType(rawView: content().value.5),
+                    ViewType(rawView: content().value.6)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3),
+                    Self.getWidth(of: content().value.4),
+                    Self.getWidth(of: content().value.5),
+                    Self.getWidth(of: content().value.6)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F, G, H)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E, F, G, H)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4),
-                                                     ContentManager.ViewType(rawView: content().value.5),
-                                                     ContentManager.ViewType(rawView: content().value.6),
-                                                     ContentManager.ViewType(rawView: content().value.7)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4),
+                    ViewType(rawView: content().value.5),
+                    ViewType(rawView: content().value.6),
+                    ViewType(rawView: content().value.7)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3),
+                    Self.getWidth(of: content().value.4),
+                    Self.getWidth(of: content().value.5),
+                    Self.getWidth(of: content().value.6),
+                    Self.getWidth(of: content().value.7)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E, F ,G, H, I)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4),
-                                                     ContentManager.ViewType(rawView: content().value.5),
-                                                     ContentManager.ViewType(rawView: content().value.6),
-                                                     ContentManager.ViewType(rawView: content().value.7),
-                                                     ContentManager.ViewType(rawView: content().value.8)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4),
+                    ViewType(rawView: content().value.5),
+                    ViewType(rawView: content().value.6),
+                    ViewType(rawView: content().value.7),
+                    ViewType(rawView: content().value.8)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3),
+                    Self.getWidth(of: content().value.4),
+                    Self.getWidth(of: content().value.5),
+                    Self.getWidth(of: content().value.6),
+                    Self.getWidth(of: content().value.7),
+                    Self.getWidth(of: content().value.8)
+                ]
+            })
     }
     
-    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
+    init<A: View, B: View, C: View, D: View, E: View, F: View, G: View, H: View, I: View, J: View>(alignment: HorizontalAlignment = .leading, spacing: Spacing = .constant(8), lineSpacing: CGFloat = 0, @ViewBuilder content: @escaping () -> TupleView<(A, B, C, D, E, F ,G, H, I, J)>) {
         self.spacing = spacing
         self.lineSpacing = lineSpacing
         self.alignment = alignment
-        self.contentManager = ContentManager(items: [ContentManager.ViewType(rawView: content().value.0),
-                                                     ContentManager.ViewType(rawView: content().value.1),
-                                                     ContentManager.ViewType(rawView: content().value.2),
-                                                     ContentManager.ViewType(rawView: content().value.3),
-                                                     ContentManager.ViewType(rawView: content().value.4),
-                                                     ContentManager.ViewType(rawView: content().value.5),
-                                                     ContentManager.ViewType(rawView: content().value.6),
-                                                     ContentManager.ViewType(rawView: content().value.7),
-                                                     ContentManager.ViewType(rawView: content().value.8),
-                                                     ContentManager.ViewType(rawView: content().value.9)])
+        self.contentManager = ContentManager(
+            items: [ViewType(rawView: content().value.0),
+                    ViewType(rawView: content().value.1),
+                    ViewType(rawView: content().value.2),
+                    ViewType(rawView: content().value.3),
+                    ViewType(rawView: content().value.4),
+                    ViewType(rawView: content().value.5),
+                    ViewType(rawView: content().value.6),
+                    ViewType(rawView: content().value.7),
+                    ViewType(rawView: content().value.8),
+                    ViewType(rawView: content().value.9)],
+            getWidths: {
+                [
+                    Self.getWidth(of: content().value.0),
+                    Self.getWidth(of: content().value.1),
+                    Self.getWidth(of: content().value.2),
+                    Self.getWidth(of: content().value.3),
+                    Self.getWidth(of: content().value.4),
+                    Self.getWidth(of: content().value.5),
+                    Self.getWidth(of: content().value.6),
+                    Self.getWidth(of: content().value.7),
+                    Self.getWidth(of: content().value.8),
+                    Self.getWidth(of: content().value.9)
+                ]
+            })
     }
 }
 

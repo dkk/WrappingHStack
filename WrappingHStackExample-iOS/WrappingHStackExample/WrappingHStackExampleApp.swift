@@ -35,7 +35,7 @@ struct WrappingHStackExampleApp: App {
                     }
                 }
 
-                if ProcessInfo.processInfo.arguments.contains("performanceTests_HS") {
+                if !ProcessInfo.processInfo.arguments.contains("performanceTests_WHS") {
                     NavigationView {
                         VStack {
                             NavigationLink("Long HStack") {

@@ -5,11 +5,11 @@ import Foundation
 class LineManager {
     private var contentManager: ContentManager!
     private var spacing: WrappingHStack.Spacing!
-    private var width: CGFloat!
+    private var width: Double!
 
     lazy var firstItemOfEachLine: [Int] = {
         var firstOfEach = [Int]()
-        var currentWidth: CGFloat = width
+        var currentWidth: Double = width
         for (index, element) in contentManager.items.enumerated() {
             switch element {
             case .newLine:
@@ -35,7 +35,7 @@ class LineManager {
         width != nil
     }
 
-    func setup(contentManager: ContentManager, width: CGFloat, spacing: WrappingHStack.Spacing) {
+    func setup(contentManager: ContentManager, width: Double, spacing: WrappingHStack.Spacing) {
         self.contentManager = contentManager
         self.width = width
         self.spacing = spacing
