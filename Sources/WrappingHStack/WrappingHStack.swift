@@ -35,7 +35,6 @@ public struct WrappingHStack: View {
     let alignment: HorizontalAlignment
     let spacing: Spacing
     let lineSpacing: CGFloat
-    let lineManager = LineManager()
     let contentManager: ContentManager
     @State private var height: CGFloat = 0
     
@@ -46,7 +45,6 @@ public struct WrappingHStack: View {
                 alignment: alignment,
                 spacing: spacing,
                 lineSpacing: lineSpacing,
-                lineManager: lineManager,
                 contentManager: contentManager
             )
             .anchorPreference(
