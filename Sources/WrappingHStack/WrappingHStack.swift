@@ -72,10 +72,10 @@ public extension WrappingHStack {
             return .infinity
         }
 
-#if os(iOS) || os(visionOS)
-        let hostingController = UIHostingController(rootView: view)
-#else
+#if os(macOS)
         let hostingController = NSHostingController(rootView: view)
+#else
+        let hostingController = UIHostingController(rootView: view)
 #endif
         return hostingController.sizeThatFits(in: CGSize(width: CGFloat.greatestFiniteMagnitude, height: CGFloat.greatestFiniteMagnitude)).width
     }
