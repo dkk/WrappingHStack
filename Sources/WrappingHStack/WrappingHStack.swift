@@ -72,7 +72,7 @@ public extension WrappingHStack {
             return .infinity
         }
 
-#if os(iOS)
+#if os(iOS) || os(visionOS)
         let hostingController = UIHostingController(rootView: view)
 #else
         let hostingController = NSHostingController(rootView: view)
