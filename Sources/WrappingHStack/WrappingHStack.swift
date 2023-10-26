@@ -99,7 +99,7 @@ public extension WrappingHStack {
         self.lineSpacing = lineSpacing
         self.alignment = alignment
         self.contentManager = ContentManager(
-            items: data.map { ViewType(rawView: content($0[keyPath: id])) },
+            items: data.map { ViewType(conditionalContent: content($0[keyPath: id])) },
             getWidths: {
                 data.map {
                     Self.getWidth(of: content($0[keyPath: id]))
